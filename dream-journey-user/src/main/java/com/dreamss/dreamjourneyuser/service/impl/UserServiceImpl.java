@@ -50,6 +50,10 @@ public class UserServiceImpl implements UserService {
         if (StringUtils.isNotBlank(user.getId())) {
             user.setUpdateTime(new Timestamp(System.currentTimeMillis()));
         } else {
+            Optional<User> userOptional = userDao.lambdaQuery().eq(User::getUsername, userVO.getUsername()).oneOpt();
+            if (userOptional.isPresent()) {
+                throw new DreamException(ResponseCodeEnum.FAIL.getValue(), ResultEnum.USERNAME_EXISTS.getLabel());
+            }
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             user.setCreateTime(timestamp);
             user.setUpdateTime(timestamp);
