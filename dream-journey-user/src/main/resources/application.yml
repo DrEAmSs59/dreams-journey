@@ -1,0 +1,48 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: dream-journey-user
+  datasource:
+    url: jdbc:mysql://116.62.22.109:3306/dream_journey
+    username: dreamss
+    password: dreamss59.
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 15
+      auto-commit: true
+      idle-timeout: 30000
+      pool-name: DatebookHikariCP
+      max-lifetime: 1800000
+      connection-timeout: 30000
+    type: com.zaxxer.hikari.HikariDataSource
+  mvc:
+    throw-exception-if-no-handler-found: true
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        service: dream-journey-user
+
+mybatis-plus:
+  mapper-locations: classpath:mappers/*.xml
+  type-aliases-package: com.dreamss.dreamjourney.entities
+  type-enums-package: com.dreamss.dreamjourney.enums
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    default-enum-type-handler: org.apache.ibatis.type.EnumOrdinalTypeHandler
+    jdbc-type-for-null: 'null'
+  global-config:
+    db-config:
+      id-type: assign_uuid
+      update-strategy: not_null

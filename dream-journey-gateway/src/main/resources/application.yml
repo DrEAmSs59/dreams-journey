@@ -1,0 +1,18 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: dream-journey-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    gateway:
+      routes:
+        - id: user_route
+          uri: lb://dream-journey-user
+          predicates:
+            - Path=/api/user/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
