@@ -1,17 +1,13 @@
 package com.dreamss.dreamjourneyuser.vo;
 
 import com.dreamss.dreamjourneycommon.enums.UserGenderEnum;
-import io.swagger.annotations.ApiModel;
+import com.dreamss.dreamjourneycommon.enums.UserTypeEnum;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.Date;
 
-/**
- * @author Created by DrEAmSs on 2022-05-20 16:59
- */
 @Data
-@ApiModel
 public class UserVO {
 
     @ApiModelProperty("主键id")
@@ -19,9 +15,6 @@ public class UserVO {
 
     @ApiModelProperty("用户名")
     private String username;
-
-    @ApiModelProperty("密码")
-    private String password;
 
     @ApiModelProperty("昵称")
     private String nickname;
@@ -49,6 +42,9 @@ public class UserVO {
 
     @ApiModelProperty("个性签名")
     private String sign;
+
+    @ApiModelProperty("用户类型")
+    private UserTypeEnum userType;
 
     @ApiModelProperty("账号来源")
     private Integer sourceType;

@@ -7,7 +7,7 @@ import lombok.Getter;
  * 用户类型枚举类
  */
 @Getter
-public enum UserTypeEnum {
+public enum UserTypeEnum implements BaseEnum<Integer> {
 
     NORMAL(0, "普通用户"),
     MERCHANT(1, "商家"),

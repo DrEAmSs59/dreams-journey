@@ -7,7 +7,7 @@ import lombok.Getter;
  * 用户状态枚举
  */
 @Getter
-public enum UserStatusEnum {
+public enum UserStatusEnum implements BaseEnum<Integer> {
 
     UNLOCKED(0, "正常"),
     LOCKED(1, "已封禁");

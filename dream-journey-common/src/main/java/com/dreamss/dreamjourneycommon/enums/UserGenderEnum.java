@@ -7,7 +7,7 @@ import lombok.Getter;
  * 用户性别枚举
  */
 @Getter
-public enum UserGenderEnum {
+public enum UserGenderEnum implements BaseEnum<Integer> {
 
     MALE(0, "男"),
     FEMALE(1, "女"),

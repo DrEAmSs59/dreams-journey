@@ -11,7 +11,8 @@ public class Constant {
     /**
      * 不参加过滤的接口列表，网关前缀+接口路径
      */
-    public static final List<String> DO_NOT_FILTER = List.of("/api/user/login", "/api/user/registerOrUpdate");
+    public static final List<String> DO_NOT_FILTER = List.of("/api/user/login", "/api/user/registerOrUpdate"
+            , "/api/user/adminLogin");
 
     /**
      * token
