@@ -16,3 +16,9 @@ spring:
             - Path=/api/user/**
           filters:
             - RewritePath=/api/(?<segment>.*),/$\{segment}
+        - id: hotel_category_route
+          uri: lb://dream-journey-category
+          predicates:
+            - Path=/api/hotel/category/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
