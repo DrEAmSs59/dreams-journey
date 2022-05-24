@@ -23,7 +23,7 @@ public enum ResultEnum {
     STORE_NOT_EXISTS(12, "当前用户没有创建店铺"),
     ORDER_NOT_EXISTS(13, "当前订单不存在"),
     ORDER_ALREADY_PAID(14, "订单已支付"),
-    CATEGORY_EXISTS(15, "分类名已存在"),
+    CATEGORY_EXISTS(400, "分类名已存在"),
     CATEGORY_NOT_EXISTS(16, "分类不存在"),
     ORDER_NOT_PAID_OR_OVERTIME(17, "订单未支付或已超期"),
     PRODUCT_NOT_EXISTS(18, "商品不存在");

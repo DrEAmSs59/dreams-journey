@@ -26,4 +26,14 @@ public interface HotelCategoryService {
      * 查询层级为1的酒店分类
      */
     List<HotelCategoryVO> queryLevel1HotelCategoryList();
+
+    /**
+     * 查询单条
+     */
+    HotelCategoryCreateVO queryById(String id);
+
+    /**
+     * 级联删除
+     */
+    void deleteByIds(List<String> ids);
 }

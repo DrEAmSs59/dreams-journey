@@ -40,5 +40,5 @@ public class HotelCategoryVO {
     private Timestamp updateTime;
 
     @ApiModelProperty("子分类")
-    private List<HotelCategoryVO> children = Lists.newArrayList();
+    private List<HotelCategoryVO> children;
 }
