@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.introspect.AnnotatedField;
 import com.fasterxml.jackson.databind.introspect.BeanPropertyDefinition;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiParam;
-import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
@@ -33,7 +32,7 @@ public class ApiBaseEnumDescriptionPlugin implements ModelPropertyBuilderPlugin,
     private static final Logger LOG = LoggerFactory.getLogger(ApiBaseEnumDescriptionPlugin.class);
 
     @Override
-    public boolean supports(@NotNull DocumentationType delimiter) {
+    public boolean supports(DocumentationType delimiter) {
         return SwaggerPluginSupport.pluginDoesApply(delimiter);
     }
 
