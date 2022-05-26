@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class UserVO {
@@ -35,7 +36,7 @@ public class UserVO {
     private Date birthday;
 
     @ApiModelProperty("所在城市")
-    private String city;
+    private List<String> city;
 
     @ApiModelProperty("工作")
     private String job;

@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @ApiModel
-public class UserRegisterVO extends UserVO{
+public class UserRegisterVO extends UserVO {
 
     @ApiModelProperty("密码")
     private String password;

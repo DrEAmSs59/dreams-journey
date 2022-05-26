@@ -1,8 +1,6 @@
 package com.dreamss.gateway.filter;
 
-import com.alibaba.fastjson.JSON;
 import com.dreamss.dreamjourneycommon.enums.ResponseCodeEnum;
-import com.dreamss.dreamjourneycommon.supports.Response;
 import com.dreamss.dreamjourneycommon.utils.Constant;
 import com.dreamss.dreamjourneycommon.utils.JwtUtils;
 import lombok.extern.slf4j.Slf4j;

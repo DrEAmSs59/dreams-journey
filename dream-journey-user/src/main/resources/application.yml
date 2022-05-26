@@ -46,3 +46,6 @@ mybatis-plus:
     db-config:
       id-type: assign_uuid
       update-strategy: not_null
+
+dream-journey:
+  file-path: /home/ftp/dream-journey
