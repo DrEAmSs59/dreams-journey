@@ -1,6 +1,7 @@
 package com.dreamss.dreamjourneyuser.vo;
 
 import com.dreamss.dreamjourneycommon.enums.UserGenderEnum;
+import com.dreamss.dreamjourneycommon.enums.UserStatusEnum;
 import com.dreamss.dreamjourneycommon.enums.UserTypeEnum;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -49,4 +50,7 @@ public class UserVO {
 
     @ApiModelProperty("账号来源")
     private Integer sourceType;
+
+    @ApiModelProperty("账号状态")
+    private UserStatusEnum userStatus;
 }

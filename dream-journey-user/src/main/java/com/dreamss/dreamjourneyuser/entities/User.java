@@ -101,7 +101,7 @@ public class User {
     /**
      * 用户状态
      */
-    private UserStatusEnum status;
+    private UserStatusEnum userStatus;
 
     /**
      * 创建时间

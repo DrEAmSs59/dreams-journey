@@ -1,6 +1,10 @@
 package com.dreamss.dreamjourneyuser.service.impl;
 
 import com.alibaba.cloud.commons.lang.StringUtils;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dreamss.dreamjourneycommon.enums.ResponseCodeEnum;
 import com.dreamss.dreamjourneycommon.enums.ResultEnum;
 import com.dreamss.dreamjourneycommon.enums.UserTypeEnum;
@@ -17,6 +21,7 @@ import com.dreamss.dreamjourneyuser.vo.UserVO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.BeanUtils;
@@ -165,5 +170,37 @@ public class UserServiceImpl implements UserService {
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public Page<UserVO> queryUserList(String username, Long mobile, String email, Integer pageIndex, Integer pageSize,
+                                      ServletRequest servletRequest) {
+        Page<User> pageParam = new Page<>(pageIndex, pageSize);
+        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+        Page<User> userPage = new LambdaQueryChainWrapper<>(userDao.getBaseMapper())
+                .like(StringUtils.isNotBlank(username), User::getUsername, username)
+                .like(StringUtils.isNotBlank(email), User::getEmail, email)
+                .like(Objects.nonNull(mobile), User::getMobile, mobile)
+                .ne(User::getId, JwtUtils
+                        .getAudience(Objects.requireNonNull(httpServletRequest.getHeader(Constant.TOKEN))))
+                .orderBy(true, false, User::getUpdateTime)
+                .page(pageParam);
+        Long total = userDao.lambdaQuery().like(StringUtils.isNotBlank(username), User::getUsername, username)
+                .like(StringUtils.isNotBlank(email), User::getEmail, email)
+                .like(Objects.nonNull(mobile), User::getMobile, mobile)
+                .ne(User::getId, JwtUtils
+                        .getAudience(Objects.requireNonNull(httpServletRequest.getHeader(Constant.TOKEN))))
+                .count();
+        Page<UserVO> userVOPage = new Page<>();
+        BeanUtils.copyProperties(userPage, userVOPage);
+        List<UserVO> userVOS = Lists.newArrayList();
+        userPage.getRecords().stream().skip((long) (pageIndex - 1) * pageSize).limit(pageSize).forEach(temp -> {
+            UserVO userVO = new UserVO();
+            BeanUtils.copyProperties(temp, userVO);
+            userVOS.add(userVO);
+        });
+        userVOPage.setRecords(userVOS);
+        userVOPage.setTotal(total);
+        return userVOPage;
     }
 }

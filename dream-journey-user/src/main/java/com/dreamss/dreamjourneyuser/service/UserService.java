@@ -1,5 +1,6 @@
 package com.dreamss.dreamjourneyuser.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dreamss.dreamjourneyuser.vo.LoginVO;
 import com.dreamss.dreamjourneyuser.vo.UserRegisterVO;
 import com.dreamss.dreamjourneyuser.vo.UserVO;
@@ -42,4 +43,10 @@ public interface UserService {
      * 获取用户头像
      */
     void getAvatar(String avatar, HttpServletResponse response);
+
+    /**
+     * 获取用户列表
+     */
+    Page<UserVO> queryUserList(String username, Long mobile, String email, Integer pageIndex, Integer pageSize,
+                               ServletRequest servletRequest);
 }
