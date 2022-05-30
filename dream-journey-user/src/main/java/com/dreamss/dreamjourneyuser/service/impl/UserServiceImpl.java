@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapp
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dreamss.dreamjourneycommon.enums.ResponseCodeEnum;
 import com.dreamss.dreamjourneycommon.enums.ResultEnum;
+import com.dreamss.dreamjourneycommon.enums.UserStatusEnum;
 import com.dreamss.dreamjourneycommon.enums.UserTypeEnum;
 import com.dreamss.dreamjourneycommon.excepitons.DreamException;
 import com.dreamss.dreamjourneycommon.utils.Constant;
@@ -63,23 +64,6 @@ public class UserServiceImpl implements UserService {
         Optional<User> userOptional = userDao.lambdaQuery().eq(User::getUsername, loginVO.getUsername()).oneOpt();
         if (userOptional.isEmpty()) {
             throw new DreamException(ResponseCodeEnum.FAIL.getValue(), ResultEnum.USERNAME_NOT_EXISTS.getLabel());
-        }
-        if (userOptional.get().getPassword().equals(loginVO.getPassword())) {
-            return JwtUtils.createToken(userOptional.get().getId(), userOptional.get().getNickname()
-                    , userOptional.get().getUsername());
-        } else {
-            throw new DreamException(ResponseCodeEnum.FAIL.getValue(), ResultEnum.LOGIN_FAIL.getLabel());
-        }
-    }
-
-    @Override
-    public String adminLogin(LoginVO loginVO) {
-        Optional<User> userOptional = userDao.lambdaQuery().eq(User::getUsername, loginVO.getUsername()).oneOpt();
-        if (userOptional.isEmpty()) {
-            throw new DreamException(ResponseCodeEnum.FAIL.getValue(), ResultEnum.USERNAME_NOT_EXISTS.getLabel());
-        }
-        if (!Objects.equals(userOptional.get().getUserType(), UserTypeEnum.ADMIN)) {
-            throw new DreamException(ResponseCodeEnum.FAIL.getValue(), ResultEnum.ACCESS_DENIED.getLabel());
         }
         if (userOptional.get().getPassword().equals(loginVO.getPassword())) {
             return JwtUtils.createToken(userOptional.get().getId(), userOptional.get().getNickname()
@@ -170,37 +154,5 @@ public class UserServiceImpl implements UserService {
                 e.printStackTrace();
             }
         }
-    }
-
-    @Override
-    public Page<UserVO> queryUserList(String username, Long mobile, String email, Integer pageIndex, Integer pageSize,
-                                      ServletRequest servletRequest) {
-        Page<User> pageParam = new Page<>(pageIndex, pageSize);
-        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
-        Page<User> userPage = new LambdaQueryChainWrapper<>(userDao.getBaseMapper())
-                .like(StringUtils.isNotBlank(username), User::getUsername, username)
-                .like(StringUtils.isNotBlank(email), User::getEmail, email)
-                .like(Objects.nonNull(mobile), User::getMobile, mobile)
-                .ne(User::getId, JwtUtils
-                        .getAudience(Objects.requireNonNull(httpServletRequest.getHeader(Constant.TOKEN))))
-                .orderBy(true, false, User::getUpdateTime)
-                .page(pageParam);
-        Long total = userDao.lambdaQuery().like(StringUtils.isNotBlank(username), User::getUsername, username)
-                .like(StringUtils.isNotBlank(email), User::getEmail, email)
-                .like(Objects.nonNull(mobile), User::getMobile, mobile)
-                .ne(User::getId, JwtUtils
-                        .getAudience(Objects.requireNonNull(httpServletRequest.getHeader(Constant.TOKEN))))
-                .count();
-        Page<UserVO> userVOPage = new Page<>();
-        BeanUtils.copyProperties(userPage, userVOPage);
-        List<UserVO> userVOS = Lists.newArrayList();
-        userPage.getRecords().stream().skip((long) (pageIndex - 1) * pageSize).limit(pageSize).forEach(temp -> {
-            UserVO userVO = new UserVO();
-            BeanUtils.copyProperties(temp, userVO);
-            userVOS.add(userVO);
-        });
-        userVOPage.setRecords(userVOS);
-        userVOPage.setTotal(total);
-        return userVOPage;
     }
 }

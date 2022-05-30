@@ -31,12 +31,6 @@ public class UserController {
         return ResponseEntity.ok(userService.login(loginVO));
     }
 
-    @ApiOperation("管理员登录")
-    @PostMapping("/adminLogin")
-    public ResponseEntity<?> adminLogin(@RequestBody LoginVO loginVO) {
-        return ResponseEntity.ok(userService.adminLogin(loginVO));
-    }
-
     @ApiOperation("用户注册或更新信息")
     @PostMapping("/registerOrUpdate")
     public ResponseEntity<?> registerOrUpdate(@RequestBody UserRegisterVO userVO) {
@@ -61,16 +55,5 @@ public class UserController {
     @GetMapping("/getAvatar")
     public void getAvatar(@RequestParam(required = false) String avatar, HttpServletResponse response) {
         userService.getAvatar(avatar, response);
-    }
-
-    @ApiOperation("获取用户列表")
-    @GetMapping("/queryUserList")
-    public ResponseEntity<?> queryUserList(@RequestParam(required = false) String username,
-                                           @RequestParam(required = false) Long mobile,
-                                           @RequestParam(required = false) String email,
-                                           @RequestParam Integer pageIndex,
-                                           @RequestParam Integer pageSize,
-                                           ServletRequest servletRequest) {
-        return ResponseEntity.ok(userService.queryUserList(username, mobile, email, pageIndex, pageSize, servletRequest));
     }
 }

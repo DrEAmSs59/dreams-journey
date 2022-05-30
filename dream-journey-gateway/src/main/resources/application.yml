@@ -16,6 +16,12 @@ spring:
             - Path=/api/user/**
           filters:
             - RewritePath=/api/(?<segment>.*),/$\{segment}
+        - id: user_admin_route
+          uri: lb://dream-journey-user
+          predicates:
+            - Path=/api/admin/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
         - id: hotel_category_route
           uri: lb://dream-journey-category
           predicates:

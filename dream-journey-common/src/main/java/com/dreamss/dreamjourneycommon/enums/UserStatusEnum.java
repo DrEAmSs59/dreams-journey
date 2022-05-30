@@ -10,7 +10,7 @@ import lombok.Getter;
 public enum UserStatusEnum implements BaseEnum<Integer> {
 
     UNLOCKED(0, "正常"),
-    LOCKED(1, "已冻结");
+    LOCKED(1, "已封禁");
 
     private final Integer value;
     private final String label;

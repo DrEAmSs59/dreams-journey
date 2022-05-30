@@ -20,11 +20,6 @@ public interface UserService {
     String login(LoginVO loginVO);
 
     /**
-     * 管理员登录
-     */
-    String adminLogin(LoginVO loginVO);
-
-    /**
      * 用户注册或更新信息
      */
     void registerOrUpdate(UserRegisterVO userVO);
@@ -43,10 +38,4 @@ public interface UserService {
      * 获取用户头像
      */
     void getAvatar(String avatar, HttpServletResponse response);
-
-    /**
-     * 获取用户列表
-     */
-    Page<UserVO> queryUserList(String username, Long mobile, String email, Integer pageIndex, Integer pageSize,
-                               ServletRequest servletRequest);
 }
